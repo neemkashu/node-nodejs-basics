@@ -1,3 +1,4 @@
-*.txt
+/**/*.txt
 .prettierrc
 files_copy
+*.md
