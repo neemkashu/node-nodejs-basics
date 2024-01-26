@@ -2,15 +2,18 @@ import { sep } from "node:path";
 import { release, version } from "os";
 import { createServer as createServerHttp } from "http";
 import "./files/c.js";
+import { createRequire } from "module";
 
 const random = Math.random();
+
+const require = createRequire(import.meta.url);
 
 let unknownObject;
 
 if (random > 0.5) {
-  unknownObject = await import("./files/a.json", { assert: { type: "json" } });
+  unknownObject = require("./files/a.json");
 } else {
-  unknownObject = await import("./files/b.json", { assert: { type: "json" } });
+  unknownObject = require("./files/b.json");
 }
 
 console.log(`Release ${release()}`);

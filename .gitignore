@@ -1,4 +1,7 @@
-/**/*.txt
+src/streams/files/fileToWrite.txt
+
+files
+*.txt
 .prettierrc
 files_copy
 *.md
