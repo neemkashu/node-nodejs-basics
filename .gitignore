@@ -1,0 +1,8 @@
+src/streams/files/fileToWrite.txt
+
+files
+*.txt
+.prettierrc
+files_copy
+*.md
+index.js
