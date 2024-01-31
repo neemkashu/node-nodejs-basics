@@ -1,14 +1,8 @@
 import { rm } from "node:fs/promises";
-import path from "node:path";
-import { fileURLToPath } from "url";
+import { getPath } from "../utils/helpers.js";
 
 const remove = async () => {
-  // Write your code here
-  //  implement function that deletes file fileToRemove.txt
-  // (if there's no file fileToRemove.txt Error with message
-  // FS operation failed must be thrown)
-  const dirname = path.dirname(fileURLToPath(import.meta.url));
-  const source = path.join(dirname, "files", "fresh.txt");
+  const source = getPath(import.meta.url, "files", "hello.txt");
   try {
     await rm(source);
   } catch (err) {

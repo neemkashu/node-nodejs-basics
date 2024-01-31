@@ -3,6 +3,7 @@ import { release, version } from "os";
 import { createServer as createServerHttp } from "http";
 import "./files/c.js";
 import { createRequire } from "module";
+import { getPath } from "../utils/helpers.js";
 
 const random = Math.random();
 
@@ -21,7 +22,7 @@ console.log(`Version ${version()}`);
 console.log(`Path segment separator is "${sep}"`);
 
 const __filename = import.meta.filename;
-const __dirname = import.meta.dirname;
+const __dirname = getPath(import.meta.url);
 
 console.log(`Path to current file is ${__filename}`);
 console.log(`Path to current directory is ${__dirname}`);

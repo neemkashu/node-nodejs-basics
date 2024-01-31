@@ -10,11 +10,10 @@ const performCalculations = async () => {
   const workerPath = path.join(__dirname, "worker.js");
 
   function runService(workerData) {
-    // if you know a better way please connect me
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const worker = new Worker(workerPath, { workerData });
-      worker.on("message", resolve);
-      worker.on("error", reject);
+      worker.on("message", (data) => resolve({ data, status: "resolved" }));
+      worker.on("error", () => resolve({ data: null, status: "error" }));
     });
   }
 
@@ -22,26 +21,9 @@ const performCalculations = async () => {
   for (let i = MIN_FIBONACCI_ARGUMENT; i < MAX_FIBONACCI_ARGUMENT; i++) {
     results.push(runService(i));
   }
-  const workersData = await Promise.allSettled(results);
+  const workersData = await Promise.all(results);
 
-  const dataConverted = workersData.map((elem) => {
-    const { status, value = null } = elem;
-    const statusConverted = convertStatus(status);
-    return {
-      status: statusConverted,
-      data: value,
-    };
-  });
-
-  console.log(dataConverted);
+  console.log(workersData);
 };
 
 await performCalculations();
-
-function convertStatus(status) {
-  const map = {
-    rejected: "error",
-    fulfilled: "resolved",
-  };
-  return map[status];
-}
